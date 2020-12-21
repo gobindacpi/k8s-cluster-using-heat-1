@@ -15,7 +15,7 @@ apt-get update
 apt-get install -y containerd.io=1.2.13-2 docker-ce=5:19.03.11~3-0~ubuntu-$(lsb_release -cs) docker-ce-cli=5:19.03.11~3-0~ubuntu-$(lsb_release -cs)
 apt-get install kubelet kubeadm kubectl -y
 
-mkdir /etc/docker
+mkdir -p /etc/docker
 cat <<EOF | sudo tee /etc/docker/daemon.json
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
@@ -23,10 +23,7 @@ cat <<EOF | sudo tee /etc/docker/daemon.json
   "log-opts": {
     "max-size": "100m"
   },
-  "storage-driver": "overlay2",
-  "storage-opts": [
-    "overlay2.override_kernel_check=true"
-  ]
+  "storage-driver": "overlay2"
 }
 EOF
 
